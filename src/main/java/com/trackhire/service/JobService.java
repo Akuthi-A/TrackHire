@@ -25,13 +25,13 @@ public class JobService {
         listOfJobApplication.add(job);
     }
 
-    public JobApplication findByID(int id) {
+    public int findByID(int id) {
         for (JobApplication job : listOfJobApplication) {
             if (job.getJobID() == id) {
-                return job;
+                return (listOfJobApplication.indexOf(job));
             }
         }
-        return null;
+        return -1;
     }
 
     public boolean removeJobApplication(JobApplication job) {
@@ -44,31 +44,39 @@ public class JobService {
 
 
     public boolean removeJobApplication(int id) {
-        JobApplication job = findByID(id);
+        int jobIndex = findByID(id);
+        if (jobIndex == -1) return false;
+        JobApplication job = listOfJobApplication.get(jobIndex);
         return removeJobApplication(job);
     }
 
-    public void updateCompanyName(int id, String company) {
-        JobApplication job = findByID(id);
+    public boolean updateCompanyName(int id, String company) {
+        int jobIndex = findByID(id);
+        if (jobIndex == -1) return false;
+        JobApplication job = listOfJobApplication.get(jobIndex);
         job.setCompanyName(company);
+        return true;
     }
 
-    public void updateRole(int id, String role) {
-        JobApplication job = findByID(id);
+    public boolean updateRole(int id, String role) {
+        int jobIndex = findByID(id);
+        if (jobIndex == -1) return false;
+        JobApplication job = listOfJobApplication.get(jobIndex);
         job.setRole(role);
+        return true;
     }
 
-    public void updateStatus(int id, Status status) {
-        JobApplication job = findByID(id);
+    public boolean updateStatus(int id, Status status) {
+        int jobIndex = findByID(id);
+        if (jobIndex == -1) return false;
+        JobApplication job = listOfJobApplication.get(jobIndex);
         job.setStatus(status);
+        return true;
     }
 
 
     public ArrayList<JobApplication> viewApplications() {
-
         return listOfJobApplication;
-//        for (JobApplication job: listOfJobApplication) {
-//            System.out.println(job.toString());
-//        }
+
     }
 }
