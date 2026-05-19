@@ -1,22 +1,29 @@
 package com.trackhire.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+
+import com.trackhire.service.JobService;
 
 public class JobApplication {
-    static int id = 0;
     private String companyName;
     private String role;
     private LocalDate dateApplied;
     private Status status;
-    private int jobID;
+    private final int jobID;
 
     public JobApplication(String companyName, String role, Status status) {
         this.setCompanyName(companyName);
         this.setRole(role);
         this.setStatus(status);
         this.dateApplied = LocalDate.now();
-        this.jobID = id;
-        id++;
+        JobService.id ++;
+        this.jobID = JobService.id;
+
+    }
+
+    public int getJobID() {
+        return jobID;
     }
 
     public String getCompanyName() {
