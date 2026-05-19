@@ -20,9 +20,9 @@ public class JobService {
         return true;
     }
 
-    public void addJobApplication(String companyName, String role, Status status) {
+    public boolean addJobApplication(String companyName, String role, Status status) {
         JobApplication job = new JobApplication(companyName, role, status);
-        listOfJobApplication.add(job);
+        return addJobApplication(job);
     }
 
     public int findByID(int id) {
