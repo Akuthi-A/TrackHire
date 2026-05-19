@@ -5,8 +5,6 @@ import com.trackhire.model.Status;
 
 import java.util.ArrayList;
 
-import static com.trackhire.model.Status.APPLIED;
-
 public class JobService {
     public static int id = 0;
     private ArrayList<JobApplication> listOfJobApplication;
@@ -27,46 +25,50 @@ public class JobService {
         listOfJobApplication.add(job);
     }
 
+    public JobApplication findByID(int id) {
+        for (JobApplication job : listOfJobApplication) {
+            if (job.getJobID() == id) {
+                return job;
+            }
+        }
+        return null;
+    }
+
     public boolean removeJobApplication(JobApplication job) {
         if (listOfJobApplication.contains(job)) {
             listOfJobApplication.remove(job);
             return true;
         }
-        System.out.println("There is no such Job application in our db.");
         return false;
     }
+
 
     public boolean removeJobApplication(int id) {
-        for (JobApplication job: listOfJobApplication) {
-            if (job.getJobID() == id) {
-                listOfJobApplication.remove(job);
-                return true;
-            }
-        }
-        System.out.println("There is no such Job application in our db.");
-        return false;
+        JobApplication job = findByID(id);
+        return removeJobApplication(job);
     }
 
-    public boolean updateJobApplication(int id, String company, String role, Status status) {
-        for (JobApplication job: listOfJobApplication) {
-            if (job.getJobID() == id) {
-                job.setCompanyName(company);
-                job.setStatus(status);
-                job.setRole(role);
-                return true;
-            }
-        }
-        return false;
+    public void updateCompanyName(int id, String company) {
+        JobApplication job = findByID(id);
+        job.setCompanyName(company);
+    }
+
+    public void updateRole(int id, String role) {
+        JobApplication job = findByID(id);
+        job.setRole(role);
+    }
+
+    public void updateStatus(int id, Status status) {
+        JobApplication job = findByID(id);
+        job.setStatus(status);
     }
 
 
-    public void viewApplications() {
-        if (listOfJobApplication.isEmpty()) {
-            System.out.println("You do not have any applications saved yet.");
-            return;
-        }
-        for (JobApplication job: listOfJobApplication) {
-            System.out.println(job.toString());
-        }
+    public ArrayList<JobApplication> viewApplications() {
+
+        return listOfJobApplication;
+//        for (JobApplication job: listOfJobApplication) {
+//            System.out.println(job.toString());
+//        }
     }
 }
