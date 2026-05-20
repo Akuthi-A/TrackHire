@@ -6,7 +6,7 @@ import com.trackhire.model.Status;
 import java.util.ArrayList;
 
 public class JobService {
-    public static int id = 0;
+    private static int id = 0;
     private ArrayList<JobApplication> listOfJobApplication;
 
     public JobService() {
@@ -21,17 +21,18 @@ public class JobService {
     }
 
     public boolean addJobApplication(String companyName, String role, Status status) {
-        JobApplication job = new JobApplication(companyName, role, status);
+        JobApplication job = new JobApplication(companyName, role, status, id);
+        id++;
         return addJobApplication(job);
     }
 
-    public int findByID(int id) {
+    public JobApplication findByID(int id) {
         for (JobApplication job : listOfJobApplication) {
             if (job.getJobID() == id) {
-                return (listOfJobApplication.indexOf(job));
+                return job;
             }
         }
-        return -1;
+        return null;
     }
 
     public boolean removeJobApplication(JobApplication job) {
@@ -44,32 +45,28 @@ public class JobService {
 
 
     public boolean removeJobApplication(int id) {
-        int jobIndex = findByID(id);
-        if (jobIndex == -1) return false;
-        JobApplication job = listOfJobApplication.get(jobIndex);
+        JobApplication job = findByID(id);
+        if (job == null) return false;
         return removeJobApplication(job);
     }
 
     public boolean updateCompanyName(int id, String company) {
-        int jobIndex = findByID(id);
-        if (jobIndex == -1) return false;
-        JobApplication job = listOfJobApplication.get(jobIndex);
+        JobApplication job = findByID(id);
+        if (job == null) return false;
         job.setCompanyName(company);
         return true;
     }
 
     public boolean updateRole(int id, String role) {
-        int jobIndex = findByID(id);
-        if (jobIndex == -1) return false;
-        JobApplication job = listOfJobApplication.get(jobIndex);
+        JobApplication job = findByID(id);
+        if (job == null) return false;
         job.setRole(role);
         return true;
     }
 
     public boolean updateStatus(int id, Status status) {
-        int jobIndex = findByID(id);
-        if (jobIndex == -1) return false;
-        JobApplication job = listOfJobApplication.get(jobIndex);
+        JobApplication job = findByID(id);
+        if (job == null) return false;
         job.setStatus(status);
         return true;
     }

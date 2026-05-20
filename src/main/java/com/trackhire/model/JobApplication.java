@@ -12,13 +12,12 @@ public class JobApplication {
     private Status status;
     private final int jobID;
 
-    public JobApplication(String companyName, String role, Status status) {
+    public JobApplication(String companyName, String role, Status status, int jobID) {
         this.setCompanyName(companyName);
         this.setRole(role);
         this.setStatus(status);
         this.dateApplied = LocalDate.now();
-        JobService.id ++;
-        this.jobID = JobService.id;
+        this.jobID = jobID;
 
     }
 
